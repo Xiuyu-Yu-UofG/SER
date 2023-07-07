@@ -1,16 +1,11 @@
 import os
-import re
+
 import sys
 import librosa
 from random import shuffle
 import numpy as np
-from typing import Tuple, Union
 import pickle
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-import joblib
-import utils
+
 
 def features(X, sample_rate: float) -> np.ndarray:
     stft = np.abs(librosa.stft(X))
@@ -129,3 +124,17 @@ def get_data_path(data_path: str, class_labels: list) -> list:
 
     shuffle(wav_file_path)
     return wav_file_path
+
+def save_features(features: np.ndarray, file_path: str) -> None:
+    """
+    将提取的特征保存到文件中。
+
+    参数:
+        features (np.ndarray): 要保存的特征。
+        file_path (str): 保存特征的文件路径。
+
+    返回:
+        无
+    """
+    with open(file_path, 'wb') as file:
+        pickle.dump(features, file)
